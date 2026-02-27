@@ -1,5 +1,9 @@
 const timeElement = document.getElementById("time");
 const dateElement = document.getElementById("date");
+const btnChange = document.getElementById("change-btn");
+const countingTimeElement = document.getElementById("counting-time");
+const controlsElement = document.querySelector(".controls");
+const titleElement = document.querySelector("#title");
 
 function updateTime() {
   const now = new Date();
@@ -34,6 +38,24 @@ function updateTime() {
   const year = now.getFullYear();
   dateElement.textContent = `${day}, ${month} ${date}, ${year}`;
 }
-updateTime();
 
-setInterval(updateTime, 1000);
+btnChange.addEventListener("click", () => {
+  if (countingTimeElement.style.display === "none") {
+    countingTimeElement.style.display = "block";
+    controlsElement.style.display = "block";
+    timeElement.style.display = "none";
+    titleElement.textContent = "Counting Time";
+  } else {
+    countingTimeElement.style.display = "none";
+    timeElement.style.display = "block";
+    controlsElement.style.display = "none";
+    titleElement.textContent = "Digital Clock";
+  }
+});
+
+function startDigitalClock() {
+  updateTime();
+  setInterval(updateTime, 1000);
+}
+
+startDigitalClock();

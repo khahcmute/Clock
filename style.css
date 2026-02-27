@@ -12,6 +12,7 @@ body {
 }
 
 .container {
+  position: relative;
   text-align: center;
   width: 400px;
   height: 400px;
@@ -28,36 +29,41 @@ body {
 }
 
 .clock {
-    font-size: 32px;
-    background-color: #000;
-    margin: 0 auto;
-    padding: 10px;
-    border-radius: 10px;
-    border: #fff solid 2px;
-    width: 60%;
-    color: #00f7ff;
-    text-shadow:
-        0 0 5px #00f7ff,
-        0 0 10px #00f7ff,
-        0 0 20px #00f7ff,
-        0 0 40px #00f7ff;
+  font-size: 32px;
+  background-color: #000;
+  margin: 0 auto;
+  padding: 20px 0;
+  border-radius: 10px;
+  border: #fff solid 2px;
+  width: 70%;
+  color: #00f7ff;
+  text-shadow:
+    0 0 5px #00f7ff,
+    0 0 10px #00f7ff,
+    0 0 20px #00f7ff,
+    0 0 40px #00f7ff;
 }
 
 #time {
-  
+  margin-bottom: 20px;
 }
 
+#counting-time {
+  margin-bottom: 20px;
+  display: none;
+}
 
 #date {
   font-size: 20px;
   margin-top: 10px;
+  padding-top: 10px;
   color: #fff;
   border-top: #fff solid 2px;
 }
 
 .controls {
-  display: inline-block;
-  margin-top: 20px;
+  margin-top: 30px;
+  display: none;
 }
 
 .controls button {
@@ -70,4 +76,21 @@ body {
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
+}
+
+#change-btn {
+  display: flex;
+  top: calc(50% - 36px);
+  left: -60px;
+  position: absolute;
+  padding: 36px 16px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: #222;
+  color: #000;
+}
+
+#change-btn:hover {
+  background-color: #555;
+  color: #fff;
 }
