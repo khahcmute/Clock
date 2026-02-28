@@ -4,6 +4,12 @@ const btnChange = document.getElementById("change-btn");
 const countingTimeElement = document.getElementById("counting-time");
 const controlsElement = document.querySelector(".controls");
 const titleElement = document.querySelector("#title");
+const startBtn = document.getElementById("start-btn");
+const stopBtn = document.getElementById("stop-btn");
+const resetBtn = document.getElementById("reset-btn");
+const startTime = 0;
+const elapsedTime = 0;
+const timerInterval = null;
 
 function updateTime() {
   const now = new Date();
@@ -58,4 +64,41 @@ function startDigitalClock() {
   setInterval(updateTime, 1000);
 }
 
+function startCountingTime() {
+  elapsedTime = Date.now() - startTime;
+  const hours = Math.floor(elapsedTime / (1000 * 60 * 60))
+    .toString()
+    .padStart(2, "0");
+  const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60))
+    .toString()
+    .padStart(2, "0");
+  const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000)
+    .toString()
+    .padStart(2, "0");
+  const milliseconds = ((elapsedTime % 1000) / 10).toString().padStart(2, "0");
+  countingTimeElement.textContent = `${hours} : ${minutes} : ${seconds} : ${milliseconds}`;
+}
+
 startDigitalClock();
+
+startBtn.addEventListener("click", start);
+stopBtn.addEventListener("click", stop1);
+resetBtn.addEventListener("click", reset);
+
+function start() {
+  if (timerInterval) return;
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(startCountingTime, 10);
+}
+
+function stop1() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function reset() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  elapsedTime = 0;
+  countingTimeElement.textContent = "00 : 00 : 00 : 00";
+}
