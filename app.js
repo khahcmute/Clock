@@ -4,12 +4,14 @@ const btnChange = document.getElementById("change-btn");
 const countingTimeElement = document.getElementById("counting-time");
 const controlsElement = document.querySelector(".controls");
 const titleElement = document.querySelector("#title");
-const startBtn = document.getElementById("start-btn");
-const stopBtn = document.getElementById("stop-btn");
-const resetBtn = document.getElementById("reset-btn");
-const startTime = 0;
-const elapsedTime = 0;
-const timerInterval = null;
+const startBtn = document.getElementById("start");
+const stopBtn = document.getElementById("stop");
+const resetBtn = document.getElementById("reset");
+
+let clockInterval = null;
+let startTime = 0;
+let elapsedTime = 0;
+let timerInterval = null;
 
 function updateTime() {
   const now = new Date();
@@ -47,11 +49,16 @@ function updateTime() {
 
 btnChange.addEventListener("click", () => {
   if (countingTimeElement.style.display === "none") {
+    clearInterval(clockInterval);
     countingTimeElement.style.display = "block";
     controlsElement.style.display = "block";
     timeElement.style.display = "none";
     titleElement.textContent = "Counting Time";
   } else {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
     countingTimeElement.style.display = "none";
     timeElement.style.display = "block";
     controlsElement.style.display = "none";
@@ -61,7 +68,8 @@ btnChange.addEventListener("click", () => {
 
 function startDigitalClock() {
   updateTime();
-  setInterval(updateTime, 1000);
+  if (clockInterval) clearInterval(clockInterval);
+  clockInterval = setInterval(updateTime, 1000);
 }
 
 function startCountingTime() {
@@ -75,7 +83,10 @@ function startCountingTime() {
   const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000)
     .toString()
     .padStart(2, "0");
-  const milliseconds = ((elapsedTime % 1000) / 10).toString().padStart(2, "0");
+  const milliseconds = Math.floor((elapsedTime % 1000) / 10)
+    .toString()
+    .padStart(2, "0");
+
   countingTimeElement.textContent = `${hours} : ${minutes} : ${seconds} : ${milliseconds}`;
 }
 
